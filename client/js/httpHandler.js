@@ -1,10 +1,11 @@
 (function() {
 
-  const serverUrl = 'http://127.0.0.1:3000';
+  const serverUrl = 'http://127.0.0.1:8080';
 
   //
   // TODO: build the swim command fetcher here
   //
+
 
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
@@ -17,17 +18,15 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: 'FILL_ME_IN',
-      cache: false,
-      contentType: false,
-      processData: false,
+      url: serverUrl,
       success: () => {
         // reload the page
+        console.log("i don't feel so good mr. stark");
         window.location = window.location.href;
       }
     });
   };
-
+  
   $('form').on('submit', function(e) {
     e.preventDefault();
 
