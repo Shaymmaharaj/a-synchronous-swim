@@ -1,52 +1,50 @@
 const SwimTeam = {
-
+  
   // direction, start and max all need to match the CSS
   direction: 'left',
   coords: { top: 100, left: 100 },
   max: { top: 0, left: 0, bottom: 295, right: 240 },
-  
+
   move: (direction) => {
     if (!SwimTeam.valid(direction)) {
       return;
     }
-    var allDirections = ['left', 'right', 'up', 'down'];
-    var randomDirection = allDirections[Math.floor(Math.random()*allDirections.length)]
-    console.log(`Lets go: ${randomDirection}`);
+    console.log(`Lets go: ${direction}`);
 
     // set the swim-team's direction
     $('.swimmer')
-      .removeClass((idx, classNames) => { 
+      .removeClass((idx, classNames) => {
         var name = classNames.match(/(turn-\w+)/);
         return name && name[1];
       })
-      .addClass(`turn-${randomDirection}`);
+      .addClass(`turn-${direction}`);
 
     // same direction as last time? -> if yes, move the swim-team
-    if (SwimTeam.direction === randomDirection) {
+    if (SwimTeam.direction === direction) {
       SwimTeam.updateLoc(direction);
       $('.team')
         .css('top', `${SwimTeam.coords.top}px`)
         .css('left', `${SwimTeam.coords.left}px`);
     }
 
-    SwimTeam.direction = randomDirection;
+    SwimTeam.direction = direction;
   },
 
-  valid: (randomDirection) => {
-    if (!randomDirection) {
+  valid: (direction) => {
+    if (!direction) {
       return false;
     }
-    if (['left', 'right', 'up', 'down'].indexOf(randomDirection) < 0 ) {
-      console.log(`Ignoring command: ${randomDirection}`);
+    if (['left', 'right', 'up', 'down'].indexOf(direction) < 0 ) {
+      console.log(`Ignoring command: ${direction}`);
       return false;
     }
     return true;
   },
 
-  updateLoc: (randomDirection) => {
+  updateLoc: (direction) => {
     // calculate what the new position is for the swim-team is
     // but don't let the swim-team get outside the max bounds!
-    switch (randomDirection) {
+    switch (direction) {
     case 'up':
       if (SwimTeam.coords.top > SwimTeam.max.top) {
         SwimTeam.coords.top -= 5;

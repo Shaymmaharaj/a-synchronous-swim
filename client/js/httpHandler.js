@@ -44,10 +44,22 @@
       }
     });
   };
+
+  
+  const ajaxGetSwim = (data) => {
+    $.ajax({
+      method: "GET",
+      url: "http://127.0.0.1:8080",
+    })
+      .done(function(data) {
+        SwimTeam.move(data);
+      });
+    };
+
+  setInterval(ajaxGetSwim, 1000);
   
   $('form').on('submit', function(e) {
     e.preventDefault();
-
     var form = $('form .file')[0];
     if (form.files.length === 0) {
       console.log('No file selected!');
