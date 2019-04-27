@@ -4,47 +4,49 @@ const SwimTeam = {
   direction: 'left',
   coords: { top: 100, left: 100 },
   max: { top: 0, left: 0, bottom: 295, right: 240 },
-
+  
   move: (direction) => {
     if (!SwimTeam.valid(direction)) {
       return;
     }
-    console.log(`Lets go: ${direction}`);
+    var allDirections = ['left', 'right', 'up', 'down'];
+    var randomDirection = allDirections[Math.floor(Math.random()*allDirections.length)]
+    console.log(`Lets go: ${randomDirection}`);
 
     // set the swim-team's direction
     $('.swimmer')
-      .removeClass((idx, classNames) => {
+      .removeClass((idx, classNames) => { 
         var name = classNames.match(/(turn-\w+)/);
         return name && name[1];
       })
-      .addClass(`turn-${direction}`);
+      .addClass(`turn-${randomDirection}`);
 
     // same direction as last time? -> if yes, move the swim-team
-    if (SwimTeam.direction === direction) {
+    if (SwimTeam.direction === randomDirection) {
       SwimTeam.updateLoc(direction);
       $('.team')
         .css('top', `${SwimTeam.coords.top}px`)
         .css('left', `${SwimTeam.coords.left}px`);
     }
 
-    SwimTeam.direction = direction;
+    SwimTeam.direction = randomDirection;
   },
 
-  valid: (direction) => {
-    if (!direction) {
+  valid: (randomDirection) => {
+    if (!randomDirection) {
       return false;
     }
-    if (['left', 'right', 'up', 'down'].indexOf(direction) < 0 ) {
-      console.log(`Ignoring command: ${direction}`);
+    if (['left', 'right', 'up', 'down'].indexOf(randomDirection) < 0 ) {
+      console.log(`Ignoring command: ${randomDirection}`);
       return false;
     }
     return true;
   },
 
-  updateLoc: (direction) => {
+  updateLoc: (randomDirection) => {
     // calculate what the new position is for the swim-team is
     // but don't let the swim-team get outside the max bounds!
-    switch (direction) {
+    switch (randomDirection) {
     case 'up':
       if (SwimTeam.coords.top > SwimTeam.max.top) {
         SwimTeam.coords.top -= 5;
